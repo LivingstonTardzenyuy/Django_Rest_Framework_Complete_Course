@@ -11,18 +11,17 @@ from rest_framework.views import APIView
 class MovieListAV(APIView):
     def get(self, request):
         movies = Movie.objects.all()
-        serializer = MovieSerializers(movies, many = True)
+        serializer = MovieSerializers(movies, many=True)
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = MovieSerializers(data = request.data)
+        serializer = MovieSerializers(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         else:
-            return Response(serializer.error)
-
-
+            return Response(serializer.errors)
+            
 class MovieDetailAV(APIView):
     def get(self, request, pk):
         
@@ -42,7 +41,7 @@ class MovieDetailAV(APIView):
             return Response(serializer.data)
 
         else:
-            return Response(serializers.errors, status = status.HTTP_400_BAD_REQUEST)
+            return Response(serializers.error, status = status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
         movie = Movie.objects.get(pk=pk)
