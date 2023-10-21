@@ -14,7 +14,7 @@ from rest_framework.views import APIView
 class StreamPlatFormAV(APIView):
     def get(self, request):
         streamPlatForm = StreamPlatForm.objects.all()
-        serializer = StreamPlatFormSerializers(streamPlatForm, many = True)
+        serializer = StreamPlatFormSerializers(streamPlatForm, many = True, context={'request': request})
         return Response(serializer.data)
 
 
@@ -51,6 +51,8 @@ class StreamPlatFormDetailAV(APIView):
         streamplt = StreamPlatForm.objects.get(pk=pk)
         streamplt.delete()
         return Response(status = status.HTTP_204_NO_CONTENT)
+
+
 
 
 class WatchListAV(APIView):

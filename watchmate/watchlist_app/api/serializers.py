@@ -5,7 +5,7 @@ from watchlist_app.models import WatchList, StreamPlatForm
 class WatchListSerializers(serializers.ModelSerializer):
 
 
-    len_name = serializers.SerializerMethodField()            #custom serializer field.
+    len_title = serializers.SerializerMethodField()            #custom serializer field.
 
     class Meta:
         model = WatchList 
@@ -13,32 +13,40 @@ class WatchListSerializers(serializers.ModelSerializer):
 
 
 
-    def get_len_name(self, object):
-        length = len(object.name)
+    def get_len_title(self, object):
+        length = len(object.title)
         return length
 
     def validate(self, data):
-        if data['name'] == data['description']:
-            raise serializers.ValidationError('the name and description should be different')
+        if data['title'] == data['storyline']:
+            raise serializers.ValidationError('the title and description should be different')
         return data 
 
-    def validate_name(self, value):
+    def validate_title(self, value):
         if len(value) < 2:
-            raise serializers.ValidationError('the name length is small')
+            raise serializers.ValidationError('the title length is small')
         else:
             return value
 
                 
 
 class StreamPlatFormSerializers(serializers.ModelSerializer):
-    len_names = serializers.SerializerMethodField()
+    # watchlist = WatchListSerializers(many = True, read_only = True)
+    # watchlist = serializers.StringRelatedField(many = True, read_only = True)
+    # len_names = serializers.SerializerMethodField()
+
+    watchlist = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='movie-details'
+    )
     class Meta:
         model = StreamPlatForm
         fields = "__all__"
 
 
-    def get_len_names(self, data):
-        return len(data.name)
+    # def get_len_names(self, data):
+    #     return len(data.name)
 
     def validate_about(self, value):
         if len(value) < 10:
