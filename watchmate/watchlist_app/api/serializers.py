@@ -31,15 +31,15 @@ class WatchListSerializers(serializers.ModelSerializer):
                 
 
 class StreamPlatFormSerializers(serializers.ModelSerializer):
-    # watchlist = WatchListSerializers(many = True, read_only = True)
+    watchlist = WatchListSerializers(many = True, read_only = True)
     # watchlist = serializers.StringRelatedField(many = True, read_only = True)
     # len_names = serializers.SerializerMethodField()
 
-    watchlist = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='movie-details'
-    )
+    # watchlist = serializers.HyperlinkedRelatedField(
+    #     many=True,
+    #     read_only=True,
+    #     view_name='movie-details'
+    # )
     class Meta:
         model = StreamPlatForm
         fields = "__all__"
