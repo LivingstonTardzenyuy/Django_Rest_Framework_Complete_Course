@@ -33,4 +33,17 @@ class Reviews(models.Model):
 
 
     def __str__(self):
-        return str(self.rating) + " - " + self.movie.title 
+        return str(self.rating) + " - " + self.movie.title
+
+
+# class ReviewCreate(generics.CreateAPIView):
+#     serializer_class = ReviewsSerializers 
+
+#     def perform_create(self, serializer):
+#         pk = self.kwargs.get('pk')
+#         try:
+#             watchlist = Watchlist.objects.get(pk=pk)
+#         except WatchList.DoesNotExists:
+#             return Response({'error: Movie not found'}, status = status.HTTP_404_NOT_FOUND)
+        
+#         serializer
