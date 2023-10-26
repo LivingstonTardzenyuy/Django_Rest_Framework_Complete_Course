@@ -13,12 +13,15 @@ from rest_framework import mixins
 
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
+from rest_framework.exceptions import ValidationError
 
 
 
 class ReviewCreate(generics.CreateAPIView):
     serializer_class = ReviewsSerializers
 
+    def get_queryset(self):
+        return Review.objects.all()
     def perform_create(self, serializer):
         pk = self.kwargs.get('pk')     #access pk
         try:
@@ -27,7 +30,14 @@ class ReviewCreate(generics.CreateAPIView):
         except WatchList.DoesNotExist:
             return Response({'errors: Movie not found'}, status = status.HTTP_404_NOT_FOUND)
 
-        serializer.save(movie = watchlist)
+
+        review_user = self.request.user 
+        review_queryset = Review.objects.filter(movie = watchlist, review_user = review_user)
+        
+        if review_queryset.exists():
+            raise ValidationError('You have already reviewed this movie.')
+
+        serializer.save(movie = watchlist, review_user = review_user)
 
 
 class ReviewList(generics.ListAPIView):
@@ -41,7 +51,7 @@ class ReviewDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Reviews.objects.all()
     serializer_class = ReviewsSerializers
 
-class StreamPlatFormViewSets(viewsets.ReadOnlyModelViewSet):
+class StreamPlatFormViewSets(viewsets.ModelViewSet):
     queryset = StreamPlatForm.objects.all()
     serializer_class = StreamPlatFormSerializers
 
