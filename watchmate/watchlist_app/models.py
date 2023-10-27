@@ -17,7 +17,10 @@ class WatchList(models.Model):
     storyline = models.CharField(max_length=200)
     platform = models.ForeignKey(StreamPlatForm, on_delete = models.CASCADE, related_name = "watchlist")
     active = models.BooleanField(default=True)
+    avg_rating = models.FloatField(default = 0)
+    number_rating = models.IntegerField(default = 0)
     created = models.DateTimeField(auto_now_add = True)
+
 
     def __str__(self):
         return self.title
@@ -36,15 +39,3 @@ class Reviews(models.Model):
     def __str__(self):
         return str(self.rating) + " - " + self.movie.title
 
-
-# class ReviewCreate(generics.CreateAPIView):
-#     serializer_class = ReviewsSerializers 
-
-#     def perform_create(self, serializer):
-#         pk = self.kwargs.get('pk')
-#         try:
-#             watchlist = Watchlist.objects.get(pk=pk)
-#         except WatchList.DoesNotExists:
-#             return Response({'error: Movie not found'}, status = status.HTTP_404_NOT_FOUND)
-        
-#         serializer

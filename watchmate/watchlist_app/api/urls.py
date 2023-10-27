@@ -13,10 +13,10 @@ urlpatterns = [
 
     
 
-    path('review_list/review-create/', ReviewCreate.as_view(), name = 'review_list'),
-    path('review_list/<int:pk>/review/', ReviewList.as_view(), name = 'review_list'),
+    path('<int:pk>/review-create/', ReviewCreate.as_view(), name = 'review_list'),
+    path('<int:pk>/reviews/', ReviewList.as_view(), name = 'review_list'),
 
-    path('stream/review/<int:pk>/',  ReviewDetails.as_view(), name = 'review_details'),
+    path('review/<int:pk>/',  ReviewDetails.as_view(), name = 'review_details'),
 
 
     path('', include(router.urls)),
