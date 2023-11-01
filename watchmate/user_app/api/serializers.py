@@ -18,5 +18,23 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def save(self):
         password = self.validated_data['password']
         password2 = self.validated_data['password2']
+        email_user = self.validated_data['email']
+        username_user = self.validated_data['username']
+
         if password != password2:
-            raise serializers.ValidationError({'error: the 2 passwords should be the same'})
+            raise serializers.ValidationError({'error': 'the 2 passwords should be the same'})
+
+        if User.objects.filter(email = self.validated_data['email']).exists():
+            raise serializers.ValidationError({'error': 'email already in use.'})
+
+
+        account = User(
+            email= email_user,
+            username = username_user,
+            password = password2
+            )
+
+        # account.set_password(password)
+        account.save()
+
+        return account 

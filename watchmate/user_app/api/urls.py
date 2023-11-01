@@ -7,3 +7,4 @@ urlpatterns = [
     path('register/', registration_view, name = 'register')
 
 ]
+# registration_view
