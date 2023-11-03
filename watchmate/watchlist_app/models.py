@@ -37,5 +37,5 @@ class Reviews(models.Model):
 
 
     def __str__(self):
-        return str(self.rating) + " - " + self.movie.title
+        return str(self.rating) + " - " + self.movie.title + "-" + str(self.review_user)
 
