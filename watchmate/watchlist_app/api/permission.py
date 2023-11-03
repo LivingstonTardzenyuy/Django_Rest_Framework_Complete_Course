@@ -13,5 +13,6 @@ class ReviewUserOrReadOnly(permissions.BasePermission):
             return True 
         
         else:
-            return obj.review_user == request.user
+            return obj.review_user == request.user      #allow only users that publish thier review to have access to update/edit
+
 
