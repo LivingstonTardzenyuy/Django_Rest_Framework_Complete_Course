@@ -47,6 +47,7 @@ class ReviewCreate(generics.CreateAPIView):
         
 class ReviewList(generics.ListAPIView):
     serializer_class = ReviewsSerializers
+    permission_classes = [IsAuthenticated]
     def get_queryset(self):
         pk = self.kwargs['pk']
         return Reviews.objects.filter(movie = pk)
