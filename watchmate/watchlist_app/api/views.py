@@ -17,9 +17,14 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from watchlist_app.api.permission import IsAdminOrReadOnly, IsReviewUserOrReadOnly
+
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
+from watchlist_app.api.throttling import ReviewCreateThrottle, ReviewListThrottle
+
 class ReviewCreate(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ReviewsSerializers
+    throttle_class = [ReviewCreateThrottle]
 
     def get_queryset(self):
         return Reviews.objects.all()
@@ -48,6 +53,7 @@ class ReviewCreate(generics.CreateAPIView):
 class ReviewList(generics.ListAPIView):
     serializer_class = ReviewsSerializers
     permission_classes = [IsAuthenticated]
+    throttle_classes = [ReviewListThrottle, AnonRateThrottle]
     def get_queryset(self):
         pk = self.kwargs['pk']
         return Reviews.objects.filter(movie = pk)
@@ -57,6 +63,9 @@ class ReviewDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Reviews.objects.all()
     serializer_class = ReviewsSerializers
     permission_classes = [IsReviewUserOrReadOnly]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'review-detatial'
+
 
 class StreamPlatFormViewSets(viewsets.ModelViewSet):
     queryset = StreamPlatForm.objects.all()
