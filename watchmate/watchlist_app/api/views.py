@@ -32,7 +32,7 @@ class ReviewCreate(generics.CreateAPIView):
     def perform_create(self, serializer):
         pk = self.kwargs.get('pk')
         try:
-            watchlist = WatchList.objects.get(pk=pk)
+            watchlist = WatchList.objects.get(pk=pk)https://www.django-rest-framework.org/api-guide/filtering/
         except WatchList.DoesNotExist:
             return Response({'errors: Movie not found'}, status=status.HTTP_404_NOT_FOUND)
 
