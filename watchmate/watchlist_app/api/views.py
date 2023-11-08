@@ -201,10 +201,6 @@ class WatchListDetail(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['title', 'platform__name']
 
-    # def get_queryset(self):
-
-
-
 class WatchListDetailAV(APIView):
     permission_classes = [IsAdminOrReadOnly]
     def get(self, request, pk):
