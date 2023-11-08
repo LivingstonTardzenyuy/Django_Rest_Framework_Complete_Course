@@ -20,9 +20,12 @@ from watchlist_app.api.permission import IsAdminOrReadOnly, IsReviewUserOrReadOn
 
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
 from watchlist_app.api.throttling import ReviewCreateThrottle, ReviewListThrottle
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 class UserReview(generics.ListAPIView):
     serializer_class = ReviewsSerializers 
+
     # throttle_classes = [ReviewListThrottle, AnonRateThrottle]
 
     # def get_queryset(self):
@@ -64,8 +67,13 @@ class ReviewCreate(generics.CreateAPIView):
         
 class ReviewList(generics.ListAPIView):
     serializer_class = ReviewsSerializers
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     throttle_classes = [ReviewListThrottle, AnonRateThrottle]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['review_user__username', 'active']
+
+
+    
     def get_queryset(self):
         pk = self.kwargs['pk']
         return Reviews.objects.filter(movie = pk)
@@ -185,6 +193,17 @@ class WatchListAV(generics.ListCreateAPIView):
         serializer_class = WatchListSerializers 
 
         return WatchList.objects.filter()
+
+
+class WatchListDetail(generics.ListAPIView):
+    queryset = WatchList.objects.all()
+    serializer_class = WatchListSerializers 
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['title', 'platform__name']
+
+    # def get_queryset(self):
+
+
 
 class WatchListDetailAV(APIView):
     permission_classes = [IsAdminOrReadOnly]
