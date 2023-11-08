@@ -21,6 +21,14 @@ from watchlist_app.api.permission import IsAdminOrReadOnly, IsReviewUserOrReadOn
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
 from watchlist_app.api.throttling import ReviewCreateThrottle, ReviewListThrottle
 
+class UserReview(generics.ListAPIView):
+    serializer_class = ReviewsSerializers 
+    # throttle_classes = [ReviewListThrottle, AnonRateThrottle]
+
+    def get_queryset(self):
+        pk = self.kwargs['username']
+        return Reviews.objects.filter(review_user__username = pk)
+
 class ReviewCreate(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ReviewsSerializers
@@ -32,7 +40,7 @@ class ReviewCreate(generics.CreateAPIView):
     def perform_create(self, serializer):
         pk = self.kwargs.get('pk')
         try:
-            watchlist = WatchList.objects.get(pk=pk)https://www.django-rest-framework.org/api-guide/filtering/
+            watchlist = WatchList.objects.get(pk=pk)
         except WatchList.DoesNotExist:
             return Response({'errors: Movie not found'}, status=status.HTTP_404_NOT_FOUND)
 

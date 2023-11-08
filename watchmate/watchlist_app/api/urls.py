@@ -18,6 +18,7 @@ urlpatterns = [
 
     path('review/<int:pk>/',  ReviewDetails.as_view(), name = 'review_details'),
 
+    path('reviews/<str:username>/', UserReview.as_view(), name = 'review-user'),
 
     path('', include(router.urls)),
 ]
