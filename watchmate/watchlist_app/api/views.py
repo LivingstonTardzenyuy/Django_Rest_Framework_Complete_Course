@@ -197,12 +197,12 @@ class WatchListAV(generics.ListCreateAPIView):
 
 class WatchListDetail(generics.ListAPIView):
     queryset = WatchList.objects.all()
-    serializer_class = WatchListSerializers 
-    # filter_backends = [DjangoFilterBackend]
-    # filterset_fields = ['title', 'platform__name']
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['title', '=platform__name']
+    serializer_class = WatchListSerializers  
+    # filter_backends = [filters.SearchFilter]
+    # search_fields = ['^title', 'platform__name']
 
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['avg_rating']
 
 class WatchListDetailAV(APIView):
     permission_classes = [IsAdminOrReadOnly]
