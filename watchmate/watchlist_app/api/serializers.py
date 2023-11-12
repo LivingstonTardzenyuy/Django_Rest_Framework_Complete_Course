@@ -14,8 +14,8 @@ class WatchListSerializers(serializers.ModelSerializer):
 
 
     len_title = serializers.SerializerMethodField()            #custom serializer field.
-    # reviews = ReviewsSerializers(many = True, read_only = True)
-    platform = serializers.CharField(source = 'platform.name')
+    reviews = ReviewsSerializers(many = True, read_only = True)
+    platform = serializers.CharField(source = 'platform.name')                      #to allow the name of the platform to be display rather than name.
     class Meta:
         model = WatchList 
         fields = "__all__"
