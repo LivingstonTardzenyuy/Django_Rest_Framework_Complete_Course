@@ -167,7 +167,12 @@ REST_FRAMEWORK = {
         'review-create': '1/day',
         'review-list': '10/day',
         'review-detatial': '2/day',
-    }
+    },
+
+
+      'DEFAULT_RENDERER_CLASSES': (             #allow me to disable the drf browsable api
+        'rest_framework.renderers.JSONRenderer',
+    )
 }
 
 
