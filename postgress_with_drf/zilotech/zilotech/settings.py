@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'zilotech.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'restAPIposgres',
+        'USER': 'kongnyuy',
+        'PASSWORD': 'posgres',
+        'HOST': 'localhost',
+        # 'PORT': '5432',
     }
 }
 
