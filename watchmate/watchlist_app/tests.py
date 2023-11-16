@@ -16,7 +16,7 @@ class StreamPlatFormTestCase(APITestCase):
             password = "Password@123"
         )
         self.token = Token.objects.get(user__username = self.user)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)   #allow data to be pass in my header.
 
 
         self.stream = models.StreamPlatForm.objects.create(
