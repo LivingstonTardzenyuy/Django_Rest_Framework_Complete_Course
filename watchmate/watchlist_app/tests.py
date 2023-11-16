@@ -10,20 +10,20 @@ from watchlist_app import models
 
 class StreamPlatFormTestCase(APITestCase):
 
-    def setUp(self):                #creating a user and passing the token in our headers. 
-        self.user = User.objects.create_user(
-            username = "example",
-            password = "Password@123"
-        )
-        self.token = Token.objects.get(user__username = self.user)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+    # def setUp(self):                #creating a user and passing the token in our headers. 
+    #     self.user = User.objects.create_user(
+    #         username = "example",
+    #         password = "Password@123"
+    #     )
+    #     self.token = Token.objects.get(user__username = self.user)
+    #     self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
 
-        self.stream = models.StreamPlatForm.objects.create(
-            name ="Netflix",
-            about = "1 streaming platform",
-            website = "https://netflix.com"
-        )
+    #     self.stream = models.StreamPlatForm.objects.create(
+    #         name ="Netflix",
+    #         about = "1 streaming platform",
+    #         website = "https://netflix.com"
+    #     )
 
     def test_streamplatform_create(self):
         data = {
