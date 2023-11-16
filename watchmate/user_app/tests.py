@@ -41,6 +41,6 @@ class LoginLogOutTestCase(APITestCase):
         self.token = Token.objects.get(
             user__username = "example")
         
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)           #passing our data in our headers to login
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)      #login in the user     #passing our data in our headers to login
         response = self.client.post(reverse('logout_view'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
