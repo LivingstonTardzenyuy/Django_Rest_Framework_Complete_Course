@@ -41,7 +41,3 @@ class StreamPlatFormTestCase(APITestCase):
     def test_streamplatform_ind(self):
         response = self.client.get(reverse('streamplatform-detail', args = (self.stream.id,)))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    # def test_streamplatform_list(self):
-    #     response = self.client.get(reverse('streamplatform-list'))
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
