@@ -23,6 +23,7 @@ class StreamPlatFormTestCase(APITestCase):
             name ="Netflix",
             about = "1 streaming platform",
             website = "https://netflix.com"
+
         )
 
     def test_streamplatform_create(self):
@@ -35,7 +36,6 @@ class StreamPlatFormTestCase(APITestCase):
 
         response = self.client.post(reverse('streamplatform-list'), data)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
 
 
     def test_streamplatform_ind(self):
