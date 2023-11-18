@@ -112,7 +112,7 @@ class ReviewTestCase(APITestCase):
             movie = self.watchlist2
         )          
 
-    def test_review_create(self):           #this test we make sure users can only review once that is why we are returing a 400 bad request showing the user has already reviewed the movie. 
+    def test_review_create(self):           #this tesfdt we make sure users can only review once that is why we are returing a 400 bad request showing the user has already reviewed the movie. 
 
 
         data = {
