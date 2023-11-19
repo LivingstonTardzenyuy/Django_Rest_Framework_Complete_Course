@@ -126,7 +126,7 @@ class ReviewTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         response = self.client.post(reverse('review_create', args = (self.watchlist.id,)), data)
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)         #we return a 400 becuase the user has already review the review. 
         self.assertEqual(models.Reviews.objects.count(), 2)
         # self.assertEqual(models.Reviews.objects..rating, 5)
 
@@ -172,5 +172,5 @@ class ReviewTestCase(APITestCase):
 
 
     def test_review_user(self):
-        response = self.client.get('/watch/reviews/?username' + self.user.username)
-        self.assertEqual(response.status_code)
+        response = self.client.get('/movie/reviews/?username' + self.user.username)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
